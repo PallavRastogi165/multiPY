@@ -1,43 +1,50 @@
+import time
 import random
-print("WELCOME TO MY GAME\nINSTRUCTIONS:-\nYOU HAVE TO GUESS A SECRET NUMBER \nAT EACH STEP I WILL TELL YOU IF THE NUMBER YOU ENTERED IS LOWER OR HIGHER THAN THE SECRET NUMBER\nYOU HAVE LIMITED GUESSES BEFORE YOU LOSE")
-print()
-print("choose difficulty-easy,medium,hard")
-diflv = input().lower()
-if diflv == "easy":
-    uplim = 100
-    sno = random.randrange(1, 100)
-    guess = 8
-if diflv == "medium":
-    uplim = 200
-    sno = random.randrange(1, 200)
-    guess = 8
-if diflv == "hard":
-    uplim = 500
-    sno = random.randrange(1, 500)
-    guess = 10
-print()
-print("you have choosen", diflv, "difficulty\n")
-print("THE SECRET NUMBER IS AN INTEGER BETWEEN 1 AND", uplim)
+userinp = 0
+points = 0
+noq = 0
+wroans = 0
+qcount = 1
 
-while(1):
-    print("YOU HAVE",guess,"GUESSES LEFT!")
-    print("ENTER YOUR NUMBER")
+print("WELCOME TO MY GAME\nINSTRUCTIONS:-\nYOU HAVE TO SOLVE AS MANY MATH PROBLEMS AS YOU CAN IN 1 MINUTE\n"
+      "EACH CORRECT ANSWER GIVES YOU 20 POINTS! BUT EACH INCORRECT ANSWER DEDUCTS 5 POINTS!\n")
+time.sleep(2)
+gamestartend = input("\npress enter to start\n")
+ini = time.time()
+while 1:
 
-    userinp = int(input())
-    guess = guess - 1
-
-    if guess == 0 and userinp != sno:
-        print("GAME OVER\nNO GUESSES LEFT\nTHE SECRET NUMBER WAS",sno)
+    fin = time.time()
+    if fin - ini >= 60:
+        print("--------------\nTIME'S UP!!!\n--------------")
+        print()
+        print(f"YOU ATTEMPTED {noq + wroans} QUESTIONS,\nAND SCORED {points} POINTS\n\nANSWERED {noq} QUESTIONS CORRECTLY, AND\n         {wroans} QUESTIONS INCORRECTLY")
+        gamestartend = input("\nPress Enter To Exit")
         break
-    elif userinp < sno:
-        print("try something bigger")
-        continue
-    elif userinp > sno:
-        print("try something smaller")
-        continue
-    elif userinp == sno:
-        print("CONGRATULATIONS YOU WON, THE SECRET NUMBER WAS",sno,"GUESSES REMAINING =", guess)
-        break
-print("\n the end")
-print("game made by pallav")
-exit12 = input("press enter to exit")
+
+    oppr = "x"
+    op = (lambda a, b: a*b)
+
+    no1 = random.randrange(5, 15)
+    no2 = random.randrange(3, 11)
+
+    print("------------\nQUESTION", qcount, "\n------------\n")
+    qcount += 1
+    print(f"What is {no1} {oppr} {no2}")
+    corans = op(no1, no2)
+    while True:
+        userinp = input("enter your answer -\n")
+        if userinp.isnumeric():
+            userinp = int(userinp)
+            break
+        else:
+            print("You Must Enter A Positive Integer!!!")
+
+
+    if userinp == corans:
+        print("\nCorrect, +20 Points!!\n")
+        noq += 1
+        points += 20
+    else:
+        print("\nIncorrect, -5 Points\n")
+        points -= 5
+        wroans += 1
